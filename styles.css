@@ -77,3 +77,9 @@ body {
     display: flex;
     margin-top: 520px;
 }
+
+.menor-1 {
+    background-color: white;
+    height: 100px;
+    
+}
