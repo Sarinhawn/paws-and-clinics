@@ -4,9 +4,14 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #38b2ac;
-    color: white;
+    background: #ffffff;
+    color: rgb(255, 255, 255);
     font-family: 'Baloo 2', sans-serif;
+    overflow-x: hidden; /* Isso aq evita rolamento automatico horizontal, n esquece plmds */
+}
+
+main {
+    flex: 1;
 }
 
 /* Navbar */
@@ -43,6 +48,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 50px;
+    height: 200px;
     
 }
 
@@ -58,7 +64,7 @@ body {
 .hero-image img {
     
     width: 100%;
-    height: calc(150vh - 20px); /* Ocupa toda a tela menos o cabeçalho */
+    height: calc(150vh - 20px); /* ISso aq limita ate aonde vai chegar, no caso pega tudo menos o cabeçalho */
     object-fit: cover;
     object-position: center;
     position: absolute;
@@ -67,19 +73,163 @@ body {
     z-index: -1;
     display: flex;
 
-    transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1); /* Transição suave */
+   
     
 }
 
-.tela-central {
-    background-color: aliceblue;
-    height: 500px;
+
+
+/* Grid dos blocos */
+.grid-container {
     display: flex;
-    margin-top: 520px;
+    justify-content: center;
+    gap: 40px;
 }
 
-.menor-1 {
+
+.central {
+    background-color: #c9cbd0;
+    width: 100%;
+    margin-top: 500px;
+}
+
+
+/* Blocos de texto alternando */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.card {
     background-color: white;
-    height: 100px;
-    
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin: 15px;
+    color: #333;
+}
+
+.card a {
+    margin: 0 15px 15px;
+    color: #800032;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+/* Botão Ver Mais */
+.ver-mais {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.ver-mais a {
+    background-color: #800032;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.ver-mais a:hover {
+    background-color: #a0003f;
+}
+
+/* Responsivo para celular, ent da pa usa no celular tbm  */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+
+
+/*
+
+
+
+*/
+
+
+.informativo {
+  background-color: #0066cc;
+  color: white;
+  padding: 60px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.texto h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.texto p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.texto ul {
+  list-style: none;
+  padding: 0;
+}
+
+.texto ul li {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.botao {
+  display: inline-block;
+  background-color: #ff8800;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.botao:hover {
+  background-color: #e07a00;
+}
+
+.imagem img {
+  max-width: 100%;
+  border-radius: 20px;
 }
