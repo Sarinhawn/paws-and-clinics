@@ -1,23 +1,46 @@
-'use client';
-
-import Link from 'next/link';
+import Link from 'next/link'
 
 export default function Navbar() {
   return (
-    <nav className="bg-teal-700 p-5">
-      <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold">Pawns & Clinics</h1>
-        <ul className="flex space-x-6">
-          <li><Link href="/" className="text-blue-100 hover:text-white">Pawns & Clinics</Link></li>
-          <li><Link href="/servicos" className="text-blue-100 hover:text-white">Serviços</Link></li>
-          <li><Link href="/blog" className="text-blue-100 hover:text-white">Blog</Link></li>
-          <li><Link href="/contato" className="text-blue-100 hover:text-white">Contato</Link></li>
-          <li><Link href="/vet-parceiro" className="text-blue-100 hover:text-white">Vet Parceiro</Link></li>
+    <nav className="bg-teal-700 text-white sticky top-0 z-10">
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <Link href="/" className="text-2xl font-bold font-baloo">
+          Pawns & Clinics
+        </Link>
+        <ul className="hidden md:flex items-center gap-6 text-sm">
+          <li>
+            <Link className="text-white/80 hover:text-white transition-colors" href="/">
+              Início
+            </Link>
+          </li>
+          <li>
+            <a className="text-white/80 hover:text-white transition-colors" href="#servicos">
+              Serviços
+            </a>
+          </li>
+          <li>
+            <a className="text-white/80 hover:text-white transition-colors" href="#blog">
+              Blog
+            </a>
+          </li>
+          <li>
+            <a className="text-white/80 hover:text-white transition-colors" href="#contato">
+              Contato
+            </a>
+          </li>
+          <li>
+            <a className="text-white/80 hover:text-white transition-colors" href="#vet">
+              Vet Parceiro
+            </a>
+          </li>
         </ul>
-        <button className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800">
-          RESULTADO DE EXAME
-        </button>
+        <Link 
+          href="/exames" 
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+        >
+          Resultado de Exame
+        </Link>
       </div>
     </nav>
-  );
+  )
 }
