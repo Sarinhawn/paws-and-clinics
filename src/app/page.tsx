@@ -18,17 +18,23 @@ export default function Home() {
                 Equipe de especialistas altamente qualificada e humanizada para a realização de seus exames.
               </p>
               <div className="mt-6 flex gap-3">
-                <Link href="/exames" className="bg-white text-teal-700 px-5 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors">
+                <Link 
+                  href="/exames" 
+                  className="bg-white text-teal-700 px-5 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
+                >
                   Exames →
                 </Link>
-                <a href="#servicos" className="border border-white/70 text-white px-5 py-3 rounded-md hover:bg-white/10 transition-colors">
+                <a 
+                  href="#servicos" 
+                  className="border border-white/70 text-white px-5 py-3 rounded-md hover:bg-white/10 transition-colors"
+                >
                   Serviços
                 </a>
               </div>
             </div>
             <div className="hidden md:block">
               <div className="aspect-[4/3] w-full rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                <span className="text-white/80">🐶🐱 Seus pets aqui</span>
+                <span className="text-white/80 text-6xl">🐶🐱</span>
               </div>
             </div>
           </div>
@@ -39,21 +45,24 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-6">Conteúdos para você</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "10 Vantagens de ter um amigo pet", image: "Doggg.png" },
-              { title: "O que você precisa saber sobre vacina para gato", image: "gatito.png" },
-              { title: "Dicas para sua fazenda", image: "cavalo.png" },
-              { title: "Como manter sua vaquinha feliz", image: "vaca.png" }
+              { title: "10 Vantagens de ter um amigo pet", emoji: "🐕", slug: "vantagens-amigo-pet" },
+              { title: "O que você precisa saber sobre vacina para gato", emoji: "🐈", slug: "vacina-para-gato" },
+              { title: "Dicas para sua fazenda", emoji: "🐴", slug: "dicas-fazenda" },
+              { title: "Como manter sua vaquinha feliz", emoji: "🐮", slug: "vaquinha-feliz" }
             ].map((item, i) => (
               <article key={i} className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow">
-                <div className="h-36 bg-gray-100 rounded-t-xl flex items-center justify-center">
-                  <span className="text-gray-500">📸 {item.title}</span>
+                <div className="h-36 bg-gradient-to-br from-teal-50 to-teal-100 rounded-t-xl flex items-center justify-center">
+                  <span className="text-6xl">{item.emoji}</span>
                 </div>
                 <div className="p-4">
                   <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <p className="text-gray-600 mt-2">Resumo breve do conteúdo para o tutor de pets.</p>
-                  <a href="#" className="inline-block mt-3 text-teal-700 font-medium hover:underline">
-                    Ler mais
-                  </a>
+                  <p className="text-gray-600 mt-2 text-sm">Resumo breve do conteúdo para o tutor de pets.</p>
+                  <Link 
+                    href={`/artigo/${item.slug}`}
+                    className="inline-block mt-3 text-teal-700 font-medium hover:underline text-sm"
+                  >
+                    Ler mais →
+                  </Link>
                 </div>
               </article>
             ))}
@@ -65,7 +74,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4 font-baloo">
                   Facilite seu atendimento com nosso sistema!
                 </h2>
                 <p className="text-gray-600 mb-6">
@@ -86,13 +95,16 @@ export default function Home() {
                     <span>Prescrições e lembretes de vacina</span>
                   </li>
                 </ul>
-                <Link href="/exames" className="bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors inline-block">
+                <Link 
+                  href="/exames" 
+                  className="bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors inline-block"
+                >
                   Conheça nosso sistema
                 </Link>
               </div>
               <div className="hidden md:block">
                 <div className="aspect-square bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                  <span className="text-gray-400">🏥 Sistema veterinário</span>
+                  <span className="text-8xl">🏥</span>
                 </div>
               </div>
             </div>

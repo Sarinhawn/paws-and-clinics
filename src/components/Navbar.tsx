@@ -34,12 +34,20 @@ export default function Navbar() {
             </a>
           </li>
         </ul>
-        <Link 
-          href="/exames" 
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
-        >
-          Resultado de Exame
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/login" 
+            className="text-white/80 hover:text-white text-sm transition-colors"
+          >
+            Entrar
+          </Link>
+          <Link 
+            href="/exames" 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+          >
+            Resultado de Exame
+          </Link>
+        </div>
       </div>
     </nav>
   )

@@ -48,10 +48,10 @@ export default function ExamesPage() {
       {/* NAVBAR */}
       <nav className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xl font-extrabold text-teal-700">
+          <Link href="/" className="text-xl font-extrabold text-teal-700 font-baloo">
             Pawns & Clinics
           </Link>
-          <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">
+          <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
             Voltar ao início
           </Link>
         </div>
@@ -61,7 +61,7 @@ export default function ExamesPage() {
       <header className="bg-gradient-to-br from-teal-600 via-teal-500 to-teal-400 text-white">
         <div className="max-w-6xl mx-auto px-4 py-12 flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl md:text-4xl font-extrabold">Resultados de Exames</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold font-baloo">Resultados de Exames</h1>
             <p className="mt-2 text-white/90">Consulte e baixe os exames do seu pet com segurança.</p>
           </div>
           <div className="bg-white/10 border border-white/20 rounded-lg p-3">
@@ -83,7 +83,7 @@ export default function ExamesPage() {
                 id="search" 
                 type="text" 
                 placeholder="Ex.: sangue, raio-x, Rex, Nina..." 
-                className="w-full rounded-md border-gray-300 focus:border-teal-600 focus:ring-teal-600 pl-10 py-3"
+                className="w-full rounded-md border-gray-300 focus:border-teal-600 focus:ring-teal-600 pl-10 py-3 border"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -96,7 +96,7 @@ export default function ExamesPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Ordenar</label>
             <select 
-              className="w-full rounded-md border-gray-300 focus:border-teal-600 focus:ring-teal-600 py-3"
+              className="w-full rounded-md border-gray-300 focus:border-teal-600 focus:ring-teal-600 py-3 border"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
