@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
@@ -8,9 +9,22 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         {/* Hero */}
-        <header className="bg-gradient-to-br from-teal-600 via-teal-500 to-teal-400 text-white">
-          <div className="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
-            <div>
+        <header className="relative bg-gradient-to-br from-teal-600 via-teal-500 to-teal-400 text-white min-h-[550px] overflow-hidden">
+          {/* Imagem de fundo */}
+          <div className="absolute inset-0">
+            <Image 
+              src="/Doggg.png" 
+              alt="Cachorro feliz brincando"
+              fill
+              className="object-cover"
+              priority
+              quality={100}
+            />
+          </div>
+          
+          {/* Conteúdo */}
+          <div className="relative max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center min-h-[550px]">
+            <div className="z-10">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight font-baloo">
                 Uma experiência única para você e seu melhor amigo pet.
               </h1>
@@ -32,29 +46,29 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className="hidden md:block">
-              <div className="aspect-[4/3] w-full rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                <span className="text-white/80 text-6xl">🐶🐱</span>
-              </div>
-            </div>
           </div>
         </header>
 
         {/* Cards de artigos */}
         <section className="max-w-6xl mx-auto px-4 py-12" id="blog">
           <h2 className="text-2xl font-bold mb-6">Conteúdos para você</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { title: "10 Vantagens de ter um amigo pet", emoji: "🐕", slug: "vantagens-amigo-pet" },
-              { title: "O que você precisa saber sobre vacina para gato", emoji: "🐈", slug: "vacina-para-gato" },
-              { title: "Dicas para sua fazenda", emoji: "🐴", slug: "dicas-fazenda" },
-              { title: "Como manter sua vaquinha feliz", emoji: "🐮", slug: "vaquinha-feliz" }
+              { title: "10 Vantagens de ter um amigo pet", image: "/sasaa.png", slug: "vantagens-amigo-pet" },
+              { title: "O que você precisa saber sobre vacina para gato", image: "/gatito.png", slug: "vacina-para-gato" },
+              { title: "Dicas para sua fazenda", image: "/cavalo.png", slug: "dicas-fazenda" },
+              { title: "Como manter sua vaquinha feliz", image: "/vaca.png", slug: "vaquinha-feliz" }
             ].map((item, i) => (
               <article key={i} className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow">
-                <div className="h-36 bg-gradient-to-br from-teal-50 to-teal-100 rounded-t-xl flex items-center justify-center">
-                  <span className="text-6xl">{item.emoji}</span>
+                <div className="h-48 rounded-t-xl overflow-hidden relative">
+                  <Image 
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <div className="p-4">
+                <div className="p-5">
                   <h3 className="text-lg font-semibold">{item.title}</h3>
                   <p className="text-gray-600 mt-2 text-sm">Resumo breve do conteúdo para o tutor de pets.</p>
                   <Link 
@@ -103,8 +117,13 @@ export default function Home() {
                 </Link>
               </div>
               <div className="hidden md:block">
-                <div className="aspect-square bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                  <span className="text-8xl">🏥</span>
+                <div className="aspect-square rounded-2xl shadow-lg overflow-hidden relative">
+                  <Image 
+                    src="/vett.png"
+                    alt="Veterinário atendendo"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </div>
             </div>

@@ -1,61 +1,30 @@
 {
   "pages": {
-    "/_not-found/page": [
-      "static/chunks/webpack-57586abe07dbe25a.js",
-      "static/chunks/fd9d1056-3eee857bde8f3b06.js",
-      "static/chunks/117-7fb362acdd9d1bcd.js",
-      "static/chunks/main-app-839e83dc6cbde29f.js",
-      "static/chunks/app/_not-found/page-4c97af5d25c58bb9.js"
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
     ],
     "/layout": [
-      "static/chunks/webpack-57586abe07dbe25a.js",
-      "static/chunks/fd9d1056-3eee857bde8f3b06.js",
-      "static/chunks/117-7fb362acdd9d1bcd.js",
-      "static/chunks/main-app-839e83dc6cbde29f.js",
-      "static/css/46264fb4154558cd.css",
-      "static/chunks/app/layout-3a4070d5c69362e5.js"
-    ],
-    "/exames/page": [
-      "static/chunks/webpack-57586abe07dbe25a.js",
-      "static/chunks/fd9d1056-3eee857bde8f3b06.js",
-      "static/chunks/117-7fb362acdd9d1bcd.js",
-      "static/chunks/main-app-839e83dc6cbde29f.js",
-      "static/chunks/972-380f0c685af81116.js",
-      "static/chunks/app/exames/page-5751085aa409a6c8.js"
-    ],
-    "/login/page": [
-      "static/chunks/webpack-57586abe07dbe25a.js",
-      "static/chunks/fd9d1056-3eee857bde8f3b06.js",
-      "static/chunks/117-7fb362acdd9d1bcd.js",
-      "static/chunks/main-app-839e83dc6cbde29f.js",
-      "static/chunks/972-380f0c685af81116.js",
-      "static/chunks/878-ed5717936346268e.js",
-      "static/chunks/app/login/page-7b1b1a41c6e7d1f3.js"
-    ],
-    "/page": [
-      "static/chunks/webpack-57586abe07dbe25a.js",
-      "static/chunks/fd9d1056-3eee857bde8f3b06.js",
-      "static/chunks/117-7fb362acdd9d1bcd.js",
-      "static/chunks/main-app-839e83dc6cbde29f.js",
-      "static/chunks/972-380f0c685af81116.js",
-      "static/chunks/app/page-ee757dd5e07226ef.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
     ],
     "/artigo/[slug]/page": [
-      "static/chunks/webpack-57586abe07dbe25a.js",
-      "static/chunks/fd9d1056-3eee857bde8f3b06.js",
-      "static/chunks/117-7fb362acdd9d1bcd.js",
-      "static/chunks/main-app-839e83dc6cbde29f.js",
-      "static/chunks/972-380f0c685af81116.js",
-      "static/chunks/878-ed5717936346268e.js",
-      "static/chunks/app/artigo/[slug]/page-4c67fc90cdf874b4.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/artigo/[slug]/page.js"
     ],
     "/artigo/[slug]/not-found": [
-      "static/chunks/webpack-57586abe07dbe25a.js",
-      "static/chunks/fd9d1056-3eee857bde8f3b06.js",
-      "static/chunks/117-7fb362acdd9d1bcd.js",
-      "static/chunks/main-app-839e83dc6cbde29f.js",
-      "static/chunks/972-380f0c685af81116.js",
-      "static/chunks/app/artigo/[slug]/not-found-99816f056be2c29e.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/artigo/[slug]/not-found.js"
+    ],
+    "/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/login/page.js"
     ]
   }
 }

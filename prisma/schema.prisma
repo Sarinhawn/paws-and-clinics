@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Clinica {
+  id           Int                @id @default(autoincrement())
+  nome         String
+  cnpj         String?
+  endereco     String?
+  telefone     String?
+  email        String?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  usuarios     UsuariosClinicas[]
+  veterinarios Veterinario[]
+  servicos     Servico[]
+  pets         Pet[]
+}
+
+model User {
+  id           Int                @id @default(autoincrement())
+  nome         String
+  email        String              @unique
+  senhaHash    String
+  telefone     String?
+  tipo         String              // tutor, veterinario, admin_clinica
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  clinicas     UsuariosClinicas[]
+  pets         Pet[]
+  veterinarios Veterinario[]
+}
+
+model UsuariosClinicas {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  clinica    Clinica  @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
+  clinicaId  Int
+  cargo      String
+  
+  @@unique([userId, clinicaId])
+  @@index([userId])
+  @@index([clinicaId])
+}
+
+model Veterinario {
+  id            Int           @id @default(autoincrement())
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  clinica       Clinica       @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
+  clinicaId     Int
+  crmv          String        @unique
+  especialidade String?
+  ativo         Boolean       @default(true)
+  agendamentos  Agendamento[]
+  exames        Exame[]
+  
+  @@index([userId])
+  @@index([clinicaId])
+  @@index([crmv])
+}
+
+model Pet {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  especie      String
+  raca         String?
+  dataNasc     DateTime?
+  tutor        User          @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  tutorId      Int
+  clinica      Clinica       @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
+  clinicaId    Int
+  agendamentos Agendamento[]
+  exames       Exame[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  @@index([tutorId])
+  @@index([clinicaId])
+}
+
+model Servico {
+  id           Int           @id @default(autoincrement())
+  clinica      Clinica       @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
+  clinicaId    Int
+  nome         String
+  descricao    String?       @db.Text
+  valorBase    Float
+  duracaoMin   Int
+  ativo        Boolean       @default(true)
+  agendamentos Agendamento[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  @@index([clinicaId])
+}
+
+model Agendamento {
+  id            Int         @id @default(autoincrement())
+  pet           Pet         @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId         Int
+  veterinario   Veterinario @relation(fields: [veterinarioId], references: [id], onDelete: Cascade)
+  veterinarioId Int
+  servico       Servico     @relation(fields: [servicoId], references: [id], onDelete: Cascade)
+  servicoId     Int
+  dataHora      DateTime
+  status        String      @default("agendado") // agendado, confirmado, realizado, cancelado
+  observacoes   String?     @db.Text
+  pagamento     Pagamento?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([petId])
+  @@index([veterinarioId])
+  @@index([servicoId])
+  @@index([dataHora])
+}
+
+model Pagamento {
+  id            Int         @id @default(autoincrement())
+  agendamento   Agendamento @relation(fields: [agendamentoId], references: [id], onDelete: Cascade)
+  agendamentoId Int         @unique
+  valor         Float
+  metodo        String      // pix, credito, debito, dinheiro
+  status        String      @default("pendente") // pendente, pago, cancelado
+  dataPagamento DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([status])
+}
+
+model Exame {
+  id            Int         @id @default(autoincrement())
+  pet           Pet         @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId         Int
+  veterinario   Veterinario @relation(fields: [veterinarioId], references: [id], onDelete: Cascade)
+  veterinarioId Int
+  tipoExame     String
+  dataExame     DateTime
+  resultado     String?     @db.Text
+  arquivoUrl    String?
+  status        String      @default("pendente") // pendente, em_andamento, concluido
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([petId])
+  @@index([veterinarioId])
+  @@index([dataExame])
+  @@index([status])
+}
