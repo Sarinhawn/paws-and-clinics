@@ -7,13 +7,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoUsuario {
+  ADMIN_GERAL
+  ADMIN_CLINICA
+  EQUIPE_CLINICA
+  TUTOR
+}
+
+enum CargoClinica {
+  ADMIN_CLINICA
+  VETERINARIO
+  RECEPCIONISTA
+  AUXILIAR
+}
+
+enum StatusAgendamento {
+  AGENDADO
+  CONFIRMADO
+  REALIZADO
+  CANCELADO
+}
+
+enum StatusPagamento {
+  PENDENTE
+  PAGO
+  CANCELADO
+}
+
+enum MetodoPagamento {
+  PIX
+  CREDITO
+  DEBITO
+  DINHEIRO
+}
+
+enum StatusExame {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDO
+}
+
 model Clinica {
   id           Int                @id @default(autoincrement())
   nome         String
-  cnpj         String?
+  cnpj         String?            @unique
   endereco     String?
   telefone     String?
   email        String?
+  admin        User?              @relation("ClinicaAdmin", fields: [adminId], references: [id], onDelete: SetNull)
+  adminId      Int?
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
   usuarios     UsuariosClinicas[]
@@ -23,27 +65,28 @@ model Clinica {
 }
 
 model User {
-  id           Int                @id @default(autoincrement())
-  nome         String
-  email        String              @unique
-  senhaHash    String
-  telefone     String?
-  tipo         String              // tutor, veterinario, admin_clinica
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
-  clinicas     UsuariosClinicas[]
-  pets         Pet[]
-  veterinarios Veterinario[]
+  id            Int                @id @default(autoincrement())
+  nome          String
+  email         String             @unique
+  senhaHash     String
+  telefone      String?
+  tipo          TipoUsuario
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  clinicas      UsuariosClinicas[]
+  pets          Pet[]
+  veterinarios  Veterinario[]
+  clinicasAdmin Clinica[]          @relation("ClinicaAdmin")
 }
 
 model UsuariosClinicas {
-  id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     Int
-  clinica    Clinica  @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
-  clinicaId  Int
-  cargo      String
-  
+  id        Int          @id @default(autoincrement())
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  clinica   Clinica      @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
+  clinicaId Int
+  cargo     CargoClinica
+
   @@unique([userId, clinicaId])
   @@index([userId])
   @@index([clinicaId])
@@ -60,7 +103,7 @@ model Veterinario {
   ativo         Boolean       @default(true)
   agendamentos  Agendamento[]
   exames        Exame[]
-  
+
   @@index([userId])
   @@index([clinicaId])
   @@index([crmv])
@@ -80,7 +123,7 @@ model Pet {
   exames       Exame[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  
+
   @@index([tutorId])
   @@index([clinicaId])
 }
@@ -91,31 +134,31 @@ model Servico {
   clinicaId    Int
   nome         String
   descricao    String?       @db.Text
-  valorBase    Float
+  valorBase    Decimal       @db.Decimal(10, 2)
   duracaoMin   Int
   ativo        Boolean       @default(true)
   agendamentos Agendamento[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  
+
   @@index([clinicaId])
 }
 
 model Agendamento {
-  id            Int         @id @default(autoincrement())
-  pet           Pet         @relation(fields: [petId], references: [id], onDelete: Cascade)
+  id            Int               @id @default(autoincrement())
+  pet           Pet               @relation(fields: [petId], references: [id], onDelete: Cascade)
   petId         Int
-  veterinario   Veterinario @relation(fields: [veterinarioId], references: [id], onDelete: Cascade)
+  veterinario   Veterinario       @relation(fields: [veterinarioId], references: [id], onDelete: Cascade)
   veterinarioId Int
-  servico       Servico     @relation(fields: [servicoId], references: [id], onDelete: Cascade)
+  servico       Servico           @relation(fields: [servicoId], references: [id], onDelete: Cascade)
   servicoId     Int
   dataHora      DateTime
-  status        String      @default("agendado") // agendado, confirmado, realizado, cancelado
-  observacoes   String?     @db.Text
+  status        StatusAgendamento @default(AGENDADO)
+  observacoes   String?           @db.Text
   pagamento     Pagamento?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
   @@index([petId])
   @@index([veterinarioId])
   @@index([servicoId])
@@ -123,16 +166,16 @@ model Agendamento {
 }
 
 model Pagamento {
-  id            Int         @id @default(autoincrement())
-  agendamento   Agendamento @relation(fields: [agendamentoId], references: [id], onDelete: Cascade)
-  agendamentoId Int         @unique
-  valor         Float
-  metodo        String      // pix, credito, debito, dinheiro
-  status        String      @default("pendente") // pendente, pago, cancelado
+  id            Int             @id @default(autoincrement())
+  agendamento   Agendamento     @relation(fields: [agendamentoId], references: [id], onDelete: Cascade)
+  agendamentoId Int             @unique
+  valor         Decimal         @db.Decimal(10, 2)
+  metodo        MetodoPagamento
+  status        StatusPagamento @default(PENDENTE)
   dataPagamento DateTime?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
   @@index([status])
 }
 
@@ -146,10 +189,10 @@ model Exame {
   dataExame     DateTime
   resultado     String?     @db.Text
   arquivoUrl    String?
-  status        String      @default("pendente") // pendente, em_andamento, concluido
+  status        StatusExame @default(PENDENTE)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  
+
   @@index([petId])
   @@index([veterinarioId])
   @@index([dataExame])
