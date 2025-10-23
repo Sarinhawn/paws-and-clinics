@@ -1,6 +1,11 @@
 import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import LogoutButton from './LogoutButton'
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await getServerSession(authOptions)
+
   return (
     <nav className="bg-teal-700 text-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -35,18 +40,38 @@ export default function Navbar() {
           </li>
         </ul>
         <div className="flex items-center gap-3">
-          <Link 
-            href="/login" 
-            className="text-white/80 hover:text-white text-sm transition-colors"
-          >
-            Entrar
-          </Link>
-          <Link 
-            href="/exames" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
-          >
-            Resultado de Exame
-          </Link>
+          {session?.user ? (
+            <>
+              <Link 
+                href="/dashboard" 
+                className="text-white/80 hover:text-white text-sm transition-colors"
+              >
+                Dashboard
+              </Link>
+              <Link 
+                href="/exames" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+              >
+                Exames
+              </Link>
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <Link 
+                href="/login" 
+                className="text-white/80 hover:text-white text-sm transition-colors"
+              >
+                Entrar
+              </Link>
+              <Link 
+                href="/cadastro" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+              >
+                Cadastrar
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

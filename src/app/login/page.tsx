@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -8,28 +10,53 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError('')
+    setLoading(true)
     
     const emailVal = email.trim()
     const pwdVal = password.trim()
     
     if (!emailVal || !pwdVal) {
-      alert('Preencha e-mail e senha.')
+      setError('Preencha e-mail e senha.')
+      setLoading(false)
       return
     }
     
     // Validação simples de email
     const emailRegex = /.+@.+\..+/
     if (!emailRegex.test(emailVal)) {
-      alert('Informe um e-mail válido.')
+      setError('Informe um e-mail válido.')
+      setLoading(false)
       return
     }
     
-    // Sucesso simulado
-    alert(`Login bem-sucedido! Bem-vindo, ${emailVal}`)
-    // Aqui você pode redirecionar: router.push('/')
+    try {
+      // Login usando NextAuth
+      const result = await signIn('credentials', {
+        email: emailVal,
+        password: pwdVal,
+        redirect: false
+      })
+
+      if (result?.error) {
+        setError('Email ou senha incorretos')
+        setLoading(false)
+        return
+      }
+
+      // Sucesso! Redirecionar para dashboard
+      router.push('/dashboard')
+      router.refresh()
+    } catch (err) {
+      setError('Erro ao fazer login. Tente novamente.')
+      setLoading(false)
+    }
   }
 
   return (
@@ -52,6 +79,13 @@ export default function LoginPage() {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           {/* Email Input */}
           <div>
             <label htmlFor="email" className="sr-only">
@@ -99,21 +133,20 @@ export default function LoginPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+            disabled={loading}
+            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Entrar
+            {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
 
         {/* Links */}
         <div className="mt-6 text-center text-sm text-gray-600">
-          <a href="#" className="hover:text-teal-700 transition-colors">
-            Esqueceu a senha?
-          </a>
-          <span className="mx-2">•</span>
-          <a href="#" className="hover:text-teal-700 transition-colors">
+          <Link href="/cadastro" className="hover:text-teal-700 transition-colors">
             Criar conta
-          </a>
+          </Link>
+          <span className="mx-2">•</span>
+          <span className="text-gray-400">Esqueceu a senha?</span>
         </div>
 
         {/* Back Link */}
