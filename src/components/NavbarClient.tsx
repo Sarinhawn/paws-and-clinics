@@ -1,10 +1,11 @@
+'use client'
+
 import Link from 'next/link'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth-options'
+import { useSession } from 'next-auth/react'
 import LogoutButton from './LogoutButton'
 
-export default async function Navbar() {
-  const session = await getServerSession(authOptions)
+export default function NavbarClient() {
+  const { data: session } = useSession()
 
   return (
     <nav className="bg-teal-700 text-white sticky top-0 z-50">

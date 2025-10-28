@@ -115,10 +115,14 @@ model Pet {
   especie      String
   raca         String?
   dataNasc     DateTime?
+  cor          String?
+  peso         Float?
+  sexo         String?
+  observacoes  String?       @db.Text
   tutor        User          @relation(fields: [tutorId], references: [id], onDelete: Cascade)
   tutorId      Int
-  clinica      Clinica       @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
-  clinicaId    Int
+  clinica      Clinica?      @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
+  clinicaId    Int?
   agendamentos Agendamento[]
   exames       Exame[]
   createdAt    DateTime      @default(now())

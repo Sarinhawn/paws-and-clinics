@@ -32,17 +32,6 @@ export const ARTICLES = {
       "Invista em nutrição balanceada, água limpa e áreas de descanso seguras.",
       "Monitorar rotinas e registros ajuda a identificar problemas cedo e agir rapidamente."
     ]
-  },
-  "vaquinha-feliz": {
-    title: "Como manter sua vaquinha feliz",
-    date: "2025-05-02",
-    readTime: "3 min",
-    cover: "/vaca.png",
-    paragraphs: [
-      "Bem-estar animal começa com conforto, alimentação adequada e acompanhamento periódico.",
-      "Ambiente limpo, enriquecimento e contato respeitoso fazem toda a diferença.",
-      "Pequenos ajustes na rotina elevam a qualidade de vida do rebanho."
-    ]
   }
 } as const
 

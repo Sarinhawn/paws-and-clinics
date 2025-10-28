@@ -56,8 +56,7 @@ export default function Home() {
             {[
               { title: "10 Vantagens de ter um amigo pet", image: "/sasaa.png", slug: "vantagens-amigo-pet" },
               { title: "O que você precisa saber sobre vacina para gato", image: "/gatito.png", slug: "vacina-para-gato" },
-              { title: "Dicas para sua fazenda", image: "/cavalo.png", slug: "dicas-fazenda" },
-              { title: "Como manter sua vaquinha feliz", image: "/vaca.png", slug: "vaquinha-feliz" }
+              { title: "Dicas para sua fazenda", image: "/cavalo.png", slug: "dicas-fazenda" }
             ].map((item, i) => (
               <article key={i} className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow">
                 <div className="h-48 rounded-t-xl overflow-hidden relative">
@@ -117,12 +116,13 @@ export default function Home() {
                 </Link>
               </div>
               <div className="hidden md:block">
-                <div className="aspect-square rounded-2xl shadow-lg overflow-hidden relative">
+                <div className="relative w-full h-full min-h-[600px] rounded-3xl overflow-hidden">
                   <Image 
                     src="/vett.png"
                     alt="Veterinário atendendo"
                     fill
                     className="object-cover"
+                    priority
                   />
                 </div>
               </div>
