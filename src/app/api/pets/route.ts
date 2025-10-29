@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { TipoUsuario } from '@prisma/client'
 
+export const dynamic = 'force-dynamic'
+
 // Schema de validação
 const criarPetSchema = z.object({
   nome: z.string().min(2, 'Nome do pet deve ter pelo menos 2 caracteres'),

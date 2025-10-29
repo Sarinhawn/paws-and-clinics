@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { TipoUsuario, StatusAgendamento } from '@prisma/client'
 
+export const dynamic = 'force-dynamic'
+
 // Schema para atualizar status
 const atualizarStatusSchema = z.object({
   status: z.nativeEnum(StatusAgendamento),

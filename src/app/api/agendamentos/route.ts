@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { TipoUsuario, StatusAgendamento } from '@prisma/client'
 
+export const dynamic = 'force-dynamic'
+
 // Schema de validação
 const criarAgendamentoSchema = z.object({
   petId: z.number().int().positive('Pet é obrigatório'),
