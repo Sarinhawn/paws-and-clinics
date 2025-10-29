@@ -178,16 +178,18 @@ export default async function PetsPage() {
                       <span className="font-medium text-gray-800">
                         {(pet as any).tutor?.nome || 'N/A'}
                       </span>
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-gray-500">Clínica:</span>
-                    <span className="font-medium text-gray-800">{pet.clinica.nome}</span>
                   </div>
+                )}
 
-                  {/* Estatísticas */}
-                  <div className="flex gap-4 pt-3 border-t">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-gray-500">Clínica:</span>
+                  <span className="font-medium text-gray-800">
+                    {pet.clinica?.nome || 'Sem clínica'}
+                  </span>
+                </div>
+
+                {/* Estatísticas */}
+                <div className="flex gap-4 pt-3 border-t">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-teal-600">
                         {pet._count.agendamentos}
