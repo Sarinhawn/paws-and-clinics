@@ -11,10 +11,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/exames/page": [
+    "/agendamentos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/exames/page.js"
+      "static/chunks/app/agendamentos/page.js"
+    ],
+    "/agendamentos/novo/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/agendamentos/novo/page.js"
     ]
   }
 }

@@ -49,6 +49,12 @@ export default async function Navbar() {
                 Dashboard
               </Link>
               <Link 
+                href="/agendamentos" 
+                className="text-white/80 hover:text-white text-sm transition-colors"
+              >
+                Agendamentos
+              </Link>
+              <Link 
                 href="/exames" 
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
               >

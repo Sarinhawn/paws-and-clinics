@@ -145,6 +145,7 @@ model Servico {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
+  @@unique([clinicaId, nome])
   @@index([clinicaId])
 }
 
