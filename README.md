@@ -60,22 +60,26 @@ pawns-clinics/
 ### Passos para executar localmente
 
 1. **Clone o repositório**
+
 ```bash
 git clone https://github.com/Sarinhawn/Projet_Escola.git
 cd Projet_Escola
 ```
 
 2. **Instale as dependências**
+
 ```bash
 npm install
 ```
 
 3. **Execute o servidor de desenvolvimento**
+
 ```bash
 npm run dev
 ```
 
 4. **Abra no navegador**
+
 ```
 http://localhost:3000
 ```
@@ -89,12 +93,12 @@ http://localhost:3000
 
 ## 🌐 Páginas e Rotas
 
-| Rota | Descrição |
-|------|-----------|
-| `/` | Página inicial com hero, artigos e informações |
-| `/login` | Página de autenticação |
-| `/exames` | Consulta de resultados de exames |
-| `/artigo/[slug]` | Páginas dinâmicas de artigos |
+| Rota             | Descrição                                      |
+| ---------------- | ---------------------------------------------- |
+| `/`              | Página inicial com hero, artigos e informações |
+| `/login`         | Página de autenticação                         |
+| `/exames`        | Consulta de resultados de exames               |
+| `/artigo/[slug]` | Páginas dinâmicas de artigos                   |
 
 ### Artigos Disponíveis
 
@@ -106,24 +110,28 @@ http://localhost:3000
 ## 🎨 Funcionalidades
 
 ### Página Inicial
+
 - Hero section com call-to-action
 - Grid de artigos do blog
 - Seção informativa sobre o sistema
 - Navbar e Footer responsivos
 
 ### Página de Exames
+
 - Sistema de busca em tempo real
 - Filtros por tipo e data
 - Cards informativos de cada exame
 - Download de resultados
 
 ### Sistema de Login
+
 - Formulário com validação
 - Toggle para mostrar/ocultar senha
 - Design moderno com background
 - Redirecionamento após login
 
 ### Blog de Artigos
+
 - Rotas dinâmicas para cada artigo
 - Breadcrumbs de navegação
 - Imagens otimizadas
@@ -131,24 +139,76 @@ http://localhost:3000
 
 ## 🚀 Deploy
 
+### 📋 Status de Prontidão para Deploy
+
+| Componente     | Status | Observação                     |
+| -------------- | ------ | ------------------------------ |
+| Next.js Config | ✅     | Configurado corretamente       |
+| Vercel.json    | ✅     | Build command com Prisma       |
+| TypeScript     | ✅     | Sem erros                      |
+| Prisma         | ✅     | Schema configurado             |
+| NextAuth       | ⚠️     | Requer variáveis de ambiente   |
+| Banco de Dados | ✅     | MySQL configurado (AlwaysData) |
+
+### ⚠️ Antes de Fazer Deploy
+
+**IMPORTANTE:** O projeto requer variáveis de ambiente obrigatórias:
+
+1. 🔐 **NEXTAUTH_SECRET** - Você precisa gerar esta chave
+2. 🔗 **NEXTAUTH_URL** - URL da aplicação em produção
+3. 🗄️ **DATABASE_URL** - String de conexão do banco (já configurado)
+
+**👉 Siga o guia completo:** [docs/PRE_DEPLOY_CHECKLIST.md](docs/PRE_DEPLOY_CHECKLIST.md)
+
 ### Vercel (Recomendado)
 
-1. Faça push do código para o GitHub
-2. Importe o projeto no [Vercel](https://vercel.com)
-3. Configure as variáveis de ambiente (se necessário)
-4. Deploy automático!
+1. **Preparação Prévia:**
 
-```bash
-npm run build
-```
+   ```bash
+   # Gere o NEXTAUTH_SECRET
+   openssl rand -base64 32
+   # ou
+   node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+   ```
+
+2. **Adicione ao arquivo .env local:**
+
+   ```env
+   DATABASE_URL="mysql://..."
+   NEXTAUTH_SECRET="[cole o valor gerado]"
+   NEXTAUTH_URL="http://localhost:3000"
+   ```
+
+3. **Teste Localmente:**
+
+   ```bash
+   npm install
+   npx prisma generate
+   npm run dev
+   ```
+
+4. **Deploy no Vercel:**
+   - Faça push do código para o GitHub
+   - Importe o projeto no [Vercel](https://vercel.com)
+   - Configure as 3 variáveis de ambiente
+   - Deploy automático!
+
+**📚 Guia Completo de Deploy:** [docs/deploy_vercel.md](docs/deploy_vercel.md)
 
 ### Outras Plataformas
 
 O projeto pode ser deployado em qualquer plataforma que suporte Next.js:
+
 - Netlify
 - AWS Amplify
 - Railway
 - Render
+
+**Requisitos:**
+
+- Node.js 18+
+- Suporte a Prisma
+- Variáveis de ambiente configuradas
 
 ## 🤝 Contribuindo
 
@@ -167,6 +227,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 ## 👤 Autor
 
 **Sarinhawn**
+
 - GitHub: [@Sarinhawn](https://github.com/Sarinhawn)
 
 ## 🙏 Agradecimentos
