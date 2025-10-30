@@ -230,6 +230,29 @@ No painel da Vercel, vá em **Settings**:
 
 ## 🐛 Troubleshooting
 
+### ❌ Erro: "No native build was found for bcrypt" (MAIS COMUM)
+
+**Erro completo:**
+
+```
+No native build was found for platform=linux arch=x64 runtime=node
+loaded from: /var/task/node_modules/bcrypt
+```
+
+**Causa:** O pacote `bcrypt` usa binários nativos que não funcionam em serverless.
+
+**Solução:** Este projeto já foi atualizado para usar `bcryptjs`. Execute:
+
+```bash
+npm uninstall bcrypt @types/bcrypt
+npm install bcryptjs @types/bcryptjs
+git add .
+git commit -m "fix: substituir bcrypt por bcryptjs para Vercel"
+git push
+```
+
+📖 **Guia completo:** [docs/FIX_BCRYPT_ERROR.md](./FIX_BCRYPT_ERROR.md)
+
 ### ❌ Erro: "PrismaClient is unable to run in this environment"
 
 **Solução:** Certifique-se de que `prisma generate` está no build command:

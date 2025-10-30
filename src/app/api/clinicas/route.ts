@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { requireAdminGeral } from '@/lib/auth'
-import { criarClinicaSchema } from '@/lib/validations'
-import bcrypt from 'bcrypt'
-import { TipoUsuario, CargoClinica } from '@prisma/client'
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { requireAdminGeral } from "@/lib/auth";
+import { criarClinicaSchema } from "@/lib/validations";
+import bcrypt from "bcryptjs";
+import { TipoUsuario, CargoClinica } from "@prisma/client";
 
 /**
  * GET /api/clinicas
@@ -12,7 +12,7 @@ import { TipoUsuario, CargoClinica } from '@prisma/client'
  */
 export async function GET() {
   try {
-    await requireAdminGeral()
+    await requireAdminGeral();
 
     const clinicas = await prisma.clinica.findMany({
       include: {
@@ -32,17 +32,25 @@ export async function GET() {
         }
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: "desc"
       }
-    })
+    });
 
-    return NextResponse.json({ clinicas }, { status: 200 })
+    return NextResponse.json({ clinicas }, { status: 200 });
   } catch (error) {
-    console.error('Erro ao listar clínicas:', error)
+    console.error("Erro ao listar clínicas:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Erro ao listar clínicas' },
-      { status: error instanceof Error && error.message.includes('autenticado') ? 401 : 500 }
-    )
+      {
+        error:
+          error instanceof Error ? error.message : "Erro ao listar clínicas"
+      },
+      {
+        status:
+          error instanceof Error && error.message.includes("autenticado")
+            ? 401
+            : 500
+      }
+    );
   }
 }
 
@@ -54,26 +62,26 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     // Verificar permissão
-    await requireAdminGeral()
+    await requireAdminGeral();
 
     // Validar dados
-    const body = await request.json()
-    const dados = criarClinicaSchema.parse(body)
+    const body = await request.json();
+    const dados = criarClinicaSchema.parse(body);
 
     // Verificar se o email do admin já existe
     const adminExistente = await prisma.user.findUnique({
       where: { email: dados.adminEmail }
-    })
+    });
 
     if (adminExistente) {
       return NextResponse.json(
-        { error: 'Email do administrador já está em uso' },
+        { error: "Email do administrador já está em uso" },
         { status: 400 }
-      )
+      );
     }
 
     // Criar hash da senha do admin
-    const senhaHash = await bcrypt.hash(dados.adminSenha, 10)
+    const senhaHash = await bcrypt.hash(dados.adminSenha, 10);
 
     // Criar clínica e admin em uma transação
     const resultado = await prisma.$transaction(async (tx) => {
@@ -86,7 +94,7 @@ export async function POST(request: NextRequest) {
           telefone: dados.adminTelefone,
           tipo: TipoUsuario.ADMIN_CLINICA
         }
-      })
+      });
 
       // 2. Criar a clínica
       const clinica = await tx.clinica.create({
@@ -107,7 +115,7 @@ export async function POST(request: NextRequest) {
             }
           }
         }
-      })
+      });
 
       // 3. Criar relação na tabela UsuariosClinicas
       await tx.usuariosClinicas.create({
@@ -116,33 +124,39 @@ export async function POST(request: NextRequest) {
           clinicaId: clinica.id,
           cargo: CargoClinica.ADMIN_CLINICA
         }
-      })
+      });
 
-      return { clinica, admin }
-    })
+      return { clinica, admin };
+    });
 
     return NextResponse.json(
       {
-        message: 'Clínica criada com sucesso',
+        message: "Clínica criada com sucesso",
         clinica: resultado.clinica
       },
       { status: 201 }
-    )
+    );
   } catch (error) {
-    console.error('Erro ao criar clínica:', error)
+    console.error("Erro ao criar clínica:", error);
 
     if (error instanceof Error) {
-      if (error.message.includes('autenticado') || error.message.includes('Acesso negado')) {
-        return NextResponse.json({ error: error.message }, { status: 401 })
+      if (
+        error.message.includes("autenticado") ||
+        error.message.includes("Acesso negado")
+      ) {
+        return NextResponse.json({ error: error.message }, { status: 401 });
       }
-      if (error.name === 'ZodError') {
-        return NextResponse.json({ error: 'Dados inválidos', details: error }, { status: 400 })
+      if (error.name === "ZodError") {
+        return NextResponse.json(
+          { error: "Dados inválidos", details: error },
+          { status: 400 }
+        );
       }
     }
 
     return NextResponse.json(
-      { error: 'Erro ao criar clínica' },
+      { error: "Erro ao criar clínica" },
       { status: 500 }
-    )
+    );
   }
 }
