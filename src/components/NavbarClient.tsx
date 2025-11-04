@@ -49,6 +49,14 @@ export default function NavbarClient() {
               >
                 Dashboard
               </Link>
+              {session.user.tipo === 'ADMIN_GERAL' && (
+                <Link 
+                  href="/clinicas" 
+                  className="text-white/80 hover:text-white text-sm transition-colors"
+                >
+                  Clínicas
+                </Link>
+              )}
               <Link 
                 href="/agendamentos" 
                 className="text-white/80 hover:text-white text-sm transition-colors"

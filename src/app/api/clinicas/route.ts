@@ -5,6 +5,8 @@ import { criarClinicaSchema } from '@/lib/validations'
 import bcrypt from 'bcrypt'
 import { TipoUsuario, CargoClinica } from '@prisma/client'
 
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/clinicas
  * Lista todas as clínicas
