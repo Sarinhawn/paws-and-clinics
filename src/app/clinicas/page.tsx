@@ -187,11 +187,13 @@ export default function ClinicasPage() {
                     </div>
                   </div>
 
-                  <div className="border-t pt-4 mb-4">
-                    <p className="text-sm text-gray-500 mb-2">Administrador:</p>
-                    <p className="font-medium text-gray-900">{clinica.admin.nome}</p>
-                    <p className="text-sm text-gray-600">{clinica.admin.email}</p>
-                  </div>
+                  {clinica.admin && (
+                    <div className="border-t pt-4 mb-4">
+                      <p className="text-sm text-gray-500 mb-2">Administrador:</p>
+                      <p className="font-medium text-gray-900">{clinica.admin.nome}</p>
+                      <p className="text-sm text-gray-600">{clinica.admin.email}</p>
+                    </div>
+                  )}
 
                   {/* Estatísticas */}
                   <div className="grid grid-cols-3 gap-2 mb-4">

@@ -65,9 +65,15 @@ export default function NavbarClient() {
               </Link>
               <Link 
                 href="/exames" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+                className="text-white/80 hover:text-white text-sm transition-colors"
               >
                 Exames
+              </Link>
+              <Link 
+                href="/perfil" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+              >
+                Meu Perfil
               </Link>
               <LogoutButton />
             </>

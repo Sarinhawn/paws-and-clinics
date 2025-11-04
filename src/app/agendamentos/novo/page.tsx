@@ -21,8 +21,8 @@ interface Veterinario {
 interface Servico {
   id: number;
   nome: string;
-  preco: number;
-  duracao: number;
+  valorBase: number;
+  duracaoMin: number;
 }
 
 export default function NovoAgendamento() {
@@ -58,17 +58,17 @@ export default function NovoAgendamento() {
 
         if (petsRes.ok) {
           const petsData = await petsRes.json();
-          setPets(petsData);
+          setPets(petsData.pets || []);
         }
 
         if (vetsRes.ok) {
           const vetsData = await vetsRes.json();
-          setVeterinarios(vetsData);
+          setVeterinarios(vetsData.veterinarios || []);
         }
 
         if (servicosRes.ok) {
           const servicosData = await servicosRes.json();
-          setServicos(servicosData);
+          setServicos(servicosData.servicos || []);
         }
       } catch (error) {
         console.error('Erro ao carregar dados:', error);
@@ -219,7 +219,7 @@ export default function NovoAgendamento() {
                 <option value="">Selecione um serviço</option>
                 {servicos.map((servico) => (
                   <option key={servico.id} value={servico.id}>
-                    {servico.nome} - R$ {servico.preco.toFixed(2)} ({servico.duracao} min)
+                    {servico.nome} - R$ {Number(servico.valorBase).toFixed(2)} ({servico.duracaoMin} min)
                   </option>
                 ))}
               </select>

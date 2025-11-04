@@ -134,7 +134,7 @@ export default function DetalhesClinicaPage() {
   };
 
   const canEdit = session?.user?.tipo === 'ADMIN_GERAL' || 
-                  (clinica && clinica.admin.email === session?.user?.email);
+                  (clinica && clinica.admin && clinica.admin.email === session?.user?.email);
 
   if (status === 'loading' || loading) {
     return (
@@ -302,9 +302,9 @@ export default function DetalhesClinicaPage() {
             {/* Veterinários */}
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
-                Veterinários ({clinica.veterinarios.length})
+                Veterinários ({clinica.veterinarios?.length || 0})
               </h2>
-              {clinica.veterinarios.length === 0 ? (
+              {!clinica.veterinarios || clinica.veterinarios.length === 0 ? (
                 <p className="text-gray-500 text-center py-4">Nenhum veterinário cadastrado</p>
               ) : (
                 <div className="space-y-3">
@@ -325,9 +325,9 @@ export default function DetalhesClinicaPage() {
             {/* Serviços */}
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
-                Serviços ({clinica.servicos.length})
+                Serviços ({clinica.servicos?.length || 0})
               </h2>
-              {clinica.servicos.length === 0 ? (
+              {!clinica.servicos || clinica.servicos.length === 0 ? (
                 <p className="text-gray-500 text-center py-4">Nenhum serviço cadastrado</p>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -348,16 +348,18 @@ export default function DetalhesClinicaPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Administrador */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-lg font-bold text-gray-900 mb-4">Administrador</h2>
-              <div className="space-y-2">
-                <p className="font-medium text-gray-900">{clinica.admin.nome}</p>
-                <p className="text-sm text-gray-600">{clinica.admin.email}</p>
-                {clinica.admin.telefone && (
-                  <p className="text-sm text-gray-600">{clinica.admin.telefone}</p>
-                )}
+            {clinica.admin && (
+              <div className="bg-white rounded-lg shadow p-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Administrador</h2>
+                <div className="space-y-2">
+                  <p className="font-medium text-gray-900">{clinica.admin.nome}</p>
+                  <p className="text-sm text-gray-600">{clinica.admin.email}</p>
+                  {clinica.admin.telefone && (
+                    <p className="text-sm text-gray-600">{clinica.admin.telefone}</p>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Estatísticas */}
             <div className="bg-white rounded-lg shadow p-6">
