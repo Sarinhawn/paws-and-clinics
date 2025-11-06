@@ -1,0 +1,14 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Paw pad -->
+  <ellipse cx="24" cy="28" rx="8" ry="6" fill="white"/>
+  
+  <!-- Toes -->
+  <ellipse cx="14" cy="18" rx="4" ry="5" fill="white"/>
+  <ellipse cx="22" cy="15" rx="4" ry="5" fill="white"/>
+  <ellipse cx="30" cy="15" rx="4" ry="5" fill="white"/>
+  <ellipse cx="36" cy="18" rx="4" ry="5" fill="white"/>
+  
+  <!-- Medical cross on paw pad -->
+  <rect x="22.5" y="24" width="3" height="8" fill="#0ea5e9" rx="1"/>
+  <rect x="19" y="27.5" width="10" height="3" fill="#0ea5e9" rx="1"/>
+</svg>

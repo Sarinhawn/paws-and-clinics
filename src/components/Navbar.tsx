@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth-options'
 import LogoutButton from './LogoutButton'
@@ -9,8 +10,9 @@ export default async function Navbar() {
   return (
     <nav className="bg-teal-700 text-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold font-baloo">
-          Pawns & Clinics
+        <Link href="/" className="flex items-center gap-2">
+          <Image src="/logo.svg" alt="Paws & Clinics" width={40} height={40} />
+          <span className="text-2xl font-bold font-baloo">Paws & Clinics</span>
         </Link>
         <ul className="hidden md:flex items-center gap-6 text-sm">
           <li>
@@ -26,16 +28,6 @@ export default async function Navbar() {
           <li>
             <a className="text-white/80 hover:text-white transition-colors" href="#blog">
               Blog
-            </a>
-          </li>
-          <li>
-            <a className="text-white/80 hover:text-white transition-colors" href="#contato">
-              Contato
-            </a>
-          </li>
-          <li>
-            <a className="text-white/80 hover:text-white transition-colors" href="#vet">
-              Vet Parceiro
             </a>
           </li>
         </ul>
