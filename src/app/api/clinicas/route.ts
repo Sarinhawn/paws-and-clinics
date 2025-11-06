@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminGeral } from "@/lib/auth";
 import { criarClinicaSchema } from "@/lib/validations";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { TipoUsuario, CargoClinica } from "@prisma/client";
 
 export const dynamic = 'force-dynamic'
