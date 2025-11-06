@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { prisma } from '@/lib/prisma';
-import bcrypt from 'bcrypt';
 
 export const dynamic = 'force-dynamic';
 
@@ -94,7 +93,7 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { nome, telefone, senhaAtual, novaSenha } = body;
+    const { nome, telefone } = body;
 
     // Buscar usuário atual
     const usuario = await prisma.user.findUnique({
@@ -108,50 +107,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Se está tentando alterar a senha, verificar a senha atual
-    if (novaSenha) {
-      if (!senhaAtual) {
-        return NextResponse.json(
-          { error: 'Senha atual é obrigatória para alterar a senha' },
-          { status: 400 }
-        );
-      }
-
-      const senhaValida = await bcrypt.compare(senhaAtual, usuario.senhaHash);
-      if (!senhaValida) {
-        return NextResponse.json(
-          { error: 'Senha atual incorreta' },
-          { status: 400 }
-        );
-      }
-
-      // Hash da nova senha
-      const novaSenhaHash = await bcrypt.hash(novaSenha, 10);
-
-      // Atualizar com nova senha
-      const usuarioAtualizado = await prisma.user.update({
-        where: { id: usuario.id },
-        data: {
-          nome: nome || usuario.nome,
-          telefone: telefone || usuario.telefone,
-          senhaHash: novaSenhaHash,
-        },
-        select: {
-          id: true,
-          nome: true,
-          email: true,
-          telefone: true,
-          tipo: true,
-        },
-      });
-
-      return NextResponse.json(
-        { message: 'Perfil e senha atualizados com sucesso', usuario: usuarioAtualizado },
-        { status: 200 }
-      );
-    }
-
-    // Atualizar apenas dados básicos
+    // Atualizar dados básicos
     const usuarioAtualizado = await prisma.user.update({
       where: { id: usuario.id },
       data: {

@@ -52,14 +52,10 @@ export default function Perfil() {
   const [loading, setLoading] = useState(true);
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [editMode, setEditMode] = useState(false);
-  const [changePassword, setChangePassword] = useState(false);
 
   // Dados do formulário
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [senhaAtual, setSenhaAtual] = useState('');
-  const [novaSenha, setNovaSenha] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -100,32 +96,10 @@ export default function Perfil() {
         return;
       }
 
-      if (changePassword) {
-        if (!senhaAtual || !novaSenha || !confirmarSenha) {
-          alert('Preencha todos os campos de senha');
-          return;
-        }
-
-        if (novaSenha !== confirmarSenha) {
-          alert('As senhas não coincidem');
-          return;
-        }
-
-        if (novaSenha.length < 6) {
-          alert('A nova senha deve ter pelo menos 6 caracteres');
-          return;
-        }
-      }
-
-      const body: any = {
+      const body = {
         nome,
         telefone: telefone || null,
       };
-
-      if (changePassword) {
-        body.senhaAtual = senhaAtual;
-        body.novaSenha = novaSenha;
-      }
 
       const response = await fetch('/api/perfil', {
         method: 'PUT',
@@ -138,10 +112,6 @@ export default function Perfil() {
       if (response.ok) {
         alert('Perfil atualizado com sucesso!');
         setEditMode(false);
-        setChangePassword(false);
-        setSenhaAtual('');
-        setNovaSenha('');
-        setConfirmarSenha('');
         fetchPerfil();
       } else {
         const error = await response.json();
@@ -158,11 +128,7 @@ export default function Perfil() {
       setNome(usuario.nome);
       setTelefone(usuario.telefone || '');
     }
-    setSenhaAtual('');
-    setNovaSenha('');
-    setConfirmarSenha('');
     setEditMode(false);
-    setChangePassword(false);
   };
 
   const getTipoUsuarioLabel = (tipo: string) => {
@@ -273,62 +239,6 @@ export default function Perfil() {
                       placeholder="(00) 00000-0000"
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
-                  </div>
-
-                  {/* Alterar Senha */}
-                  <div className="border-t pt-4 mt-4">
-                    <div className="flex items-center mb-4">
-                      <input
-                        type="checkbox"
-                        id="changePassword"
-                        checked={changePassword}
-                        onChange={(e) => setChangePassword(e.target.checked)}
-                        className="mr-2"
-                      />
-                      <label htmlFor="changePassword" className="text-sm font-medium text-gray-700">
-                        Alterar senha
-                      </label>
-                    </div>
-
-                    {changePassword && (
-                      <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Senha Atual
-                          </label>
-                          <input
-                            type="password"
-                            value={senhaAtual}
-                            onChange={(e) => setSenhaAtual(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Nova Senha
-                          </label>
-                          <input
-                            type="password"
-                            value={novaSenha}
-                            onChange={(e) => setNovaSenha(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Confirmar Nova Senha
-                          </label>
-                          <input
-                            type="password"
-                            value={confirmarSenha}
-                            onChange={(e) => setConfirmarSenha(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                          />
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Botões */}
