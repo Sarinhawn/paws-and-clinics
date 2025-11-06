@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import LogoutButton from './LogoutButton'
 
@@ -11,9 +10,8 @@ export default function NavbarClient() {
   return (
     <nav className="bg-teal-700 text-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="Paws & Clinics" width={40} height={40} />
-          <span className="text-2xl font-bold font-baloo">Paws & Clinics</span>
+        <Link href="/" className="text-2xl font-bold font-baloo">
+          Paws & Clinics
         </Link>
         <ul className="hidden md:flex items-center gap-6 text-sm">
           <li>

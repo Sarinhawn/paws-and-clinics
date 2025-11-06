@@ -6,8 +6,11 @@ import AuthProvider from '@/components/AuthProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Pawns & Clinics - Clínica Veterinária',
+  title: 'Paws & Clinics - Clínica Veterinária',
   description: 'Uma experiência única para você e seu melhor amigo pet.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
